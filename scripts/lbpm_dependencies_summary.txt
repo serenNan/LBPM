@@ -1,0 +1,93 @@
+=================================================================
+LBPM 项目依赖库配置摘要
+生成时间: $(date)
+=================================================================
+
+1. HDF5 库 ✅
+   版本: 1.10.10
+   类型: OpenMPI 并行版本
+   头文件: /usr/include/hdf5/openmpi/
+   库文件: /usr/lib/x86_64-linux-gnu/hdf5/openmpi/libhdf5.so
+   
+   CMake 配置:
+   -D HDF5_DIRECTORY=/usr/lib/x86_64-linux-gnu/hdf5/openmpi
+   -D HDF5_LIB=/usr/lib/x86_64-linux-gnu/hdf5/openmpi/libhdf5.so
+
+2. MPI 库 ✅  
+   实现: OpenMPI 4.1.6
+   编译器:
+     - mpicc:  /usr/bin/mpicc
+     - mpicxx: /usr/bin/mpicxx
+     - mpirun: /usr/bin/mpirun
+   GCC 版本: 13.3.0 (Ubuntu)
+   
+   CMake 配置:
+   -D CMAKE_C_COMPILER=mpicc
+   -D CMAKE_CXX_COMPILER=mpicxx
+   -D MPIEXEC=mpirun
+
+3. CUDA Toolkit ⏳
+   状态: 正在安装中
+   目标版本: 12.6
+   驱动版本: 580.65.06
+   GPU: NVIDIA GeForce RTX 3060 Laptop (6GB, Ampere架构)
+   架构代码: sm_86
+   
+   安装后路径:
+   - nvcc: /usr/local/cuda-12.6/bin/nvcc
+   - 库目录: /usr/local/cuda-12.6/lib64/
+   
+   CMake 配置:
+   -D USE_CUDA=1
+   -D CMAKE_CUDA_COMPILER=/usr/local/cuda-12.6/bin/nvcc  
+   -D CMAKE_CUDA_FLAGS="-arch sm_86"
+   -D CMAKE_CUDA_HOST_COMPILER=/usr/bin/gcc
+
+4. SILO 库 ⏳
+   状态: 源码下载中
+   目标版本: 4.11
+   源码位置: /tmp/silo-4.11.tar.gz
+   安装目标: /opt/silo
+   
+   编译配置:
+   ./configure --prefix=/opt/silo \
+       --with-hdf5=/usr/include/hdf5/openmpi,/usr/lib/x86_64-linux-gnu/hdf5/openmpi \
+       --enable-optimization
+   
+   CMake 配置:
+   -D USE_SILO=1
+   -D SILO_DIRECTORY=/opt/silo
+   -D SILO_LIB=/opt/silo/lib/libsiloh5.a
+
+5. TimerUtility (可选) ⏸️
+   状态: 待定
+   源码: https://github.com/AdvancedMultiPhysics/TimerUtility.git
+   安装目标: /opt/timer
+   
+   CMake 配置:
+   -D USE_TIMER=1
+   -D TIMER_DIRECTORY=/opt/timer
+
+6. NetCDF (可选) ❓
+   状态: 可以通过 apt 安装
+   命令: sudo apt install libnetcdf-dev
+   
+   CMake 配置:
+   -D USE_NETCDF=1
+
+=================================================================
+系统资源状态
+=================================================================
+
+CPU: 16 核心
+内存: 14 GB (当前可用 3.8 GB)
+交换: 15 GB  
+磁盘: 35 GB 可用
+GPU 显存: 6 GB
+
+编译建议:
+- 使用 make -j4 或 make -j8
+- 预计编译时间: 20-30 分钟
+- 预计磁盘占用: 1.5-2 GB
+
+=================================================================
