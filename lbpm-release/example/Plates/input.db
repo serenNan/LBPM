@@ -1,0 +1,43 @@
+Color {
+    tauA   = 0.7;  
+    tauB   = 0.7;  
+    rhoA   = 1.0;  
+    rhoB   = 1.0;  
+    alpha = 1e-3;
+    beta  = 0.95;
+    F = 0, 0, 0
+    Restart = false
+    timestepMax = 500
+    flux = 0.0
+    ComponentLabels = -2, -1
+    ComponentAffinity = 1.0, 1.0;
+}
+
+Domain {
+    Filename = "ParallelPlates.raw"
+    nproc = 1, 1, 4     // Number of processors (Npx,Npy,Npz)
+    n = 24, 24, 24      // Size of local domain (Nx,Ny,Nz)
+    N = 24, 24, 96      // size of the input image
+    L = 1, 1, 1         // Length of domain (x,y,z)
+    BC = 0              // Boundary condition type
+    ReadType = "8bit"
+    ReadValues = -2, -1, 1, 2
+    WriteValues = -2, -1, 1, 2
+}
+
+Analysis {
+    analysis_interval = 100    // Frequency to perform analysis
+    visualization_interval = 500
+    subphase_analysis_interval = 100
+    restart_interval = 100000
+    restart_file = "Restart"    // Filename to use for restart file (will append rank)
+    N_threads    = 4            // Number of threads to use
+    load_balance = "independent" // Load balance method to use: "none", "default", "independent"
+}
+
+Visualization {
+}
+
+FlowAdaptor {
+
+}

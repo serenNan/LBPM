@@ -1,0 +1,54 @@
+Color {
+    tauA   = 1.0;  // relaxation time for fluid A
+    tauB   = 1.0;  // relaxation time for fluid B
+    rhoA   = 1.0;  
+    rhoB   = 1.0;  
+    alpha = 1e-2;
+    beta  = 0.95;
+    F = 0, 0, 0
+    Restart = false
+    timestepMax = 200
+    ComponentLabels = 0, 1, 2
+    ComponentAffinity = -1.0, 1.0, -1.0
+}
+
+FreeLee {
+    tauA = 1.0;  
+    tauB = 1.0;  
+    tauM = 1.0;//relaxation parameter for the phase field
+    rhoA   = 1.0;  
+    rhoB   = 1.0;  
+    gamma = 1.0e-4;//surface tension parameter in Lee model
+    W = 3.0; //theoretical interfacial thickness in Lee model; unit:[voxel]
+    F = 0, 0, 0
+    Restart = false
+    timestepMax = 1000
+    flux = 0.0
+    ComponentLabels = 0
+    ComponentAffinity = -1.0
+}
+
+Domain {
+    nproc = 1, 1, 1     // Number of processors (Npx,Npy,Npz)
+    n = 80, 80, 80      // Size of local domain (Nx,Ny,Nz)
+    n_spheres = 1       // Number of spheres
+    L = 1, 1, 1         // Length of domain (x,y,z)
+    BC = 0              // Boundary condition type
+}
+
+Analysis {
+    blobid_interval = 1000      // Frequency to perform blob identification
+    analysis_interval = 1000    // Frequency to perform analysis
+    restart_interval = 20000    // Frequency to write restart data
+    visualization_interval = 20000        // Frequency to write visualization data
+    restart_file = "Restart"    // Filename to use for restart file (will append rank)
+    N_threads    = 4            // Number of threads to use
+    load_balance = "independent" // Load balance method to use: "none", "default", "independent"
+}
+
+Visualization {
+}
+
+FlowAdaptor {
+
+}

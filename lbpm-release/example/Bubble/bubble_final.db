@@ -1,0 +1,39 @@
+Color {
+    tauA   = 1.0;  // relaxation time for fluid A (water)
+    tauB   = 1.0;  // relaxation time for fluid B (gas/oil)
+    rhoA   = 1.0;
+    rhoB   = 1.0;
+    alpha = 1e-2;  // surface tension parameter
+    beta  = 0.95;  // fluid-fluid interaction
+    F = 0, 0, 0    // external force
+    Restart = false
+    timestepMax = 200
+    ComponentLabels = 0, 1, 2
+    ComponentAffinity = -1.0, 1.0, -1.0
+}
+
+Domain {
+    Filename = "bubble_80x80x80.raw"   // Input geometry file
+    ReadType = "8bit"                   // File type
+    ReadValues = 0, 1, 2                // Values to read: solid=0, fluid1=1, fluid2=2
+    WriteValues = 0, 1, 2               // Values to write (same mapping)
+    N = 80, 80, 80                      // Global domain size
+    nproc = 1, 1, 1                     // Number of processors (Npx,Npy,Npz)
+    n = 80, 80, 80                      // Size of local domain (Nx,Ny,Nz)
+    L = 1, 1, 1                         // Length of domain (x,y,z)
+    BC = 0                              // Boundary condition: 0=periodic
+}
+
+Analysis {
+    analysis_interval = 100             // Analysis每100步
+    visualization_interval = 100        // 可视化输出每100步
+}
+
+Visualization {
+    write_silo = true                   // 输出SILO格式
+    save_phase_field = true             // 保存相场数据
+}
+
+FlowAdaptor {
+    // 流动适配器配置(可选,此处留空使用默认值)
+}
